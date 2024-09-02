@@ -1,0 +1,10 @@
+<div class="panel-menu" cdkDropList [cdkDropListData]="items" (cdkDropListDropped)="drop($event)">
+    <p-panelMenu [model]="items">
+      <div *ngFor="let item of items" cdkDrag [cdkDragData]="item">
+        <!-- This makes the menu items draggable -->
+      </div>
+    </p-panelMenu>
+  </div>
+  <div class="button-wrapper">
+   <button class="btn btn-primary">Önizleme</button>
+</div>

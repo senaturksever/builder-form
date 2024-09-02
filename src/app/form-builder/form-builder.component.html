@@ -1,0 +1,45 @@
+<div class="form-builder">
+  <div class="row"  cdkDropList (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let component of dragDropService.formComponents" [ngClass]="getClassForComponent(component)" cdkDrag  cdkDragBoundary=".main-side">
+      <div class="form-group">
+        <ng-container *ngIf="component.type !== 'button'">
+            <h4 class="form-header">
+                <input type="text" [(ngModel)]="component.label" placeholder="Enter label text" class="form-label">
+              </h4>
+          </ng-container>
+        <ng-container [ngSwitch]="component.type">
+          
+          <!-- Input Field -->
+          <input *ngSwitchCase="'input'" type="text" [(ngModel)]="component.value" [placeholder]="component.name" class="form-control" />
+          
+          <!-- Checkbox -->
+          <p-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="component.checked" [label]="component.name" class="form-control-checkbox"></p-checkbox>
+          
+          <!-- Textarea -->
+          <textarea *ngSwitchCase="'inputTextarea'" [(ngModel)]="component.value" [placeholder]="component.name" class="form-control"></textarea>
+          
+             <!-- Dropdown -->
+             <ng-container *ngSwitchCase="'dropdown'">
+                <p-dropdown 
+                  [options]="getDropdownOptions(component.id)" 
+                  [(ngModel)]="component.selectedValue" 
+                 >
+                </p-dropdown>
+              </ng-container>
+
+
+          <ng-container *ngSwitchCase="'button'">
+            <div class="button-wrapper" [ngClass]="{
+                    'button-left': component.alignment === 'left',
+                    'button-center': component.alignment === 'center',
+                    'button-right': component.alignment === 'right'
+                  }">
+              <button class="btn btn-primary">{{ component.name }}</button>
+            </div>
+          </ng-container>
+          <p-calendar  *ngSwitchCase="'date'" [(ngModel)]="component.value" [showIcon]="true"></p-calendar>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

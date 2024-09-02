@@ -1,0 +1,23 @@
+.content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    flex-direction: row;
+    
+    gap: 50px;
+  }
+  
+  .left-side {
+    flex: 1; 
+    padding: 20px;
+    border: 1px solid #ccc; /* Kenarlık */
+  }
+  
+  .main-side {
+    flex: 2; /* Ana taraf iki kat geniş */
+    padding: 20px;
+    border: 1px solid #ccc;
+    min-height: 500px;
+    overflow: hidden; 
+    position: relative;
+  }
