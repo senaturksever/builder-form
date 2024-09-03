@@ -6,12 +6,15 @@ import { LeftSideComponent } from './left-side/left-side.component'; // Standalo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBuilderComponent } from "./form-builder/form-builder.component";
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { RightSideComponent } from './right-side/right-side.component';
+import { PreviewFormComponent } from './preview-form/preview-form.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,13 @@ import { HttpClientModule } from '@angular/common/http';
     LeftSideComponent, // Standalone bileşeni burada ekliyoruz
     BrowserAnimationsModule,
     FormBuilderComponent,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    RightSideComponent,
+    PreviewFormComponent
+],
+exports: [
+  FormBuilderComponent,  // Export if used in other modules
 ],
   providers: [],
   bootstrap: [AppComponent]

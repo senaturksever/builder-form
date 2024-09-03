@@ -1,33 +1,49 @@
-<div class="form-builder">
-  <div class="row"  cdkDropList (cdkDropListDropped)="drop($event)">
-    <div *ngFor="let component of dragDropService.formComponents" [ngClass]="getClassForComponent(component)" cdkDrag  cdkDragBoundary=".main-side">
-      <div class="form-group">
+<!-- <div class="button-eye">
+  <button class="btn btn-primary preview-button" (click)="openPreview()">
+    <i class="pi pi-search"></i>
+  </button>
+</div> -->
+
+
+<div class="form-builder" >
+  <div class="row" cdkDropList (cdkDropListDropped)="drop($event)" >
+    <ng-container *ngIf="!previewMode; else staticMode">
+    <div *ngFor="let component of formComponents; let i = index" 
+         [ngClass]="getClassForComponent(component)" 
+         cdkDrag cdkDragBoundary=".main-side" cdkDragPreview>
+      <div class="form-group" style="position: relative;">
+        
+        <!-- X icon for removing the component, hidden by default -->
+          
+          <button class="remove-btn" (click)="removeComponent(i)">
+            &times;
+          </button>
+       
+        
         <ng-container *ngIf="component.type !== 'button'">
-            <h4 class="form-header">
-                <input type="text" [(ngModel)]="component.label" placeholder="Enter label text" class="form-label">
-              </h4>
-          </ng-container>
+          <h4 class="form-header">
+            <input type="text" [(ngModel)]="component.label" placeholder="Enter label text" class="form-label">
+          
+          </h4>
+        </ng-container>
+        
         <ng-container [ngSwitch]="component.type">
           
           <!-- Input Field -->
           <input *ngSwitchCase="'input'" type="text" [(ngModel)]="component.value" [placeholder]="component.name" class="form-control" />
           
-          <!-- Checkbox -->
-          <p-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="component.checked" [label]="component.name" class="form-control-checkbox"></p-checkbox>
-          
           <!-- Textarea -->
           <textarea *ngSwitchCase="'inputTextarea'" [(ngModel)]="component.value" [placeholder]="component.name" class="form-control"></textarea>
           
-             <!-- Dropdown -->
-             <ng-container *ngSwitchCase="'dropdown'">
-                <p-dropdown 
-                  [options]="getDropdownOptions(component.id)" 
-                  [(ngModel)]="component.selectedValue" 
-                 >
-                </p-dropdown>
-              </ng-container>
+          <!-- Dropdown -->
+          <ng-container *ngSwitchCase="'dropdown'">
+            <p-dropdown 
+              [options]="getDropdownOptions(component.id)" 
+              [(ngModel)]="component.selectedValue">
+            </p-dropdown>
+          </ng-container>
 
-
+          <!-- Button -->
           <ng-container *ngSwitchCase="'button'">
             <div class="button-wrapper" [ngClass]="{
                     'button-left': component.alignment === 'left',
@@ -37,9 +53,121 @@
               <button class="btn btn-primary">{{ component.name }}</button>
             </div>
           </ng-container>
-          <p-calendar  *ngSwitchCase="'date'" [(ngModel)]="component.value" [showIcon]="true"></p-calendar>
+
+          <!-- Date Picker -->
+          <p-calendar *ngSwitchCase="'date'" [(ngModel)]="component.value" [showIcon]="true"></p-calendar>
+          
         </ng-container>
       </div>
     </div>
+  </ng-container>
+  <ng-template #staticMode pTemplate="content">
+    <div class="form-builder form-preview">
+        <div class="row">
+            <div *ngFor="let component of formComponents" [ngClass]="getClassForComponent(component)">
+                <div class="form-group" style="position: relative;">
+                    
+                    <ng-container *ngIf="component.type !== 'button'">
+                      <h4 class="form-header">
+                        <input type="text" [value]="component.label" class="form-label" >
+                      </h4>
+                    </ng-container>
+
+                    <ng-container [ngSwitch]="component.type">
+                        
+                        <!-- Input Field -->
+                        <input *ngSwitchCase="'input'" type="text" [value]="component.value" [placeholder]="component.name" class="form-control"  />
+                        
+                       
+                        <!-- Textarea -->
+                        <textarea *ngSwitchCase="'inputTextarea'" [value]="component.value" [placeholder]="component.name" class="form-control" ></textarea>
+                        
+                        <!-- Dropdown -->
+                        <ng-container *ngSwitchCase="'dropdown'">
+                          <p-dropdown 
+                            [options]="getDropdownOptions(component.id)" 
+                            [(ngModel)]="component.selectedValue" [disabled]="true">
+                          </p-dropdown>
+                        </ng-container>
+
+                        <!-- Button -->
+                        <ng-container *ngSwitchCase="'button'">
+                          <div class="button-wrapper" [ngClass]="{
+                                  'button-left': component.alignment === 'left',
+                                  'button-center': component.alignment === 'center',
+                                  'button-right': component.alignment === 'right'
+                                }">
+                            <button class="btn btn-primary">{{ component.name }}</button>
+                          </div>
+                        </ng-container>
+
+                        <!-- Date Picker -->
+                        <p-calendar *ngSwitchCase="'date'" [(ngModel)]="component.value" [showIcon]="true" ></p-calendar>
+                        
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
   </div>
 </div>
+
+
+
+<!-- <p-dialog [(visible)]="displayPreviewDialog" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+  <ng-template pTemplate="header">
+    <input type="text" [(ngModel)]="formName" placeholder="Form ismi" class="form-label" />
+  </ng-template>
+  <ng-template pTemplate="content">
+      <div class="form-builder form-preview">
+          <div class="row">
+              <div *ngFor="let component of previewFormComponent" [ngClass]="getClassForComponent(component)">
+                  <div class="form-group" style="position: relative;">
+                      
+                      <ng-container *ngIf="component.type !== 'button'">
+                        <h4 class="form-header">
+                          <input type="text" [value]="component.label" class="form-label" >burası mı acılıyor
+                        </h4>
+                      </ng-container>
+
+                      <ng-container [ngSwitch]="component.type">
+                          
+                          <input *ngSwitchCase="'input'" type="text" [value]="component.value" [placeholder]="component.name" class="form-control"  />
+                          
+                         
+                          <textarea *ngSwitchCase="'inputTextarea'" [value]="component.value" [placeholder]="component.name" class="form-control" ></textarea>
+                     
+                          <ng-container *ngSwitchCase="'dropdown'">
+                            <p-dropdown 
+                              [options]="getDropdownOptions(component.id)" 
+                              [(ngModel)]="component.selectedValue" [disabled]="true">
+                            </p-dropdown>
+                          </ng-container>
+
+                       
+                          <ng-container *ngSwitchCase="'button'">
+                            <div class="button-wrapper" [ngClass]="{
+                                    'button-left': component.alignment === 'left',
+                                    'button-center': component.alignment === 'center',
+                                    'button-right': component.alignment === 'right'
+                                  }">
+                              <button class="btn btn-primary">{{ component.name }}</button>
+                            </div>
+                          </ng-container>
+
+                      
+                          <p-calendar *ngSwitchCase="'date'" [(ngModel)]="component.value" [showIcon]="true" ></p-calendar>
+                          
+                      </ng-container>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    
+    <button type="button" pButton label="Kaydet" (click)="saveForm()"></button>
+    <button type="button" pButton label="Kapat" (click)="closePreview()"></button>
+  </ng-template>
+</p-dialog> -->

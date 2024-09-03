@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { CommonModule } from '@angular/common';
@@ -6,11 +6,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 import { DragDropService } from '../functions/drag-drop';
 import { EditorModule } from 'primeng/editor';
+import { FormBuilderComponent } from '../form-builder/form-builder.component';
 
 @Component({
   selector: 'app-left-side',
@@ -30,10 +30,15 @@ import { EditorModule } from 'primeng/editor';
   ]
 })
 export class LeftSideComponent implements OnInit {
-  items: (MenuItem & { type?: string, name?: string })[] = []; // Extend MenuItem to include custom properties
+
+  
+
+  items: (MenuItem & { type?: string, name?: string })[] = []; 
   formComponents: any[] = []; 
 
   constructor(private dragDropService: DragDropService) {}
+
+
   ngOnInit() {
       this.items = [
           {
@@ -89,7 +94,7 @@ export class LeftSideComponent implements OnInit {
             label: 'TextArea',
             type: 'inputTextarea',
             name: 'Textarea',
-            icon: 'pi pi-fw pi-user',
+            icon: 'pi pi-fw pi-pencil',
             items: [
                 {
                     label: 'Tam ekran',
@@ -143,7 +148,7 @@ export class LeftSideComponent implements OnInit {
   handleComponentAdd(type: string, name: string, width: string, alignment?: string, id?: string) {
     this.dragDropService.addComponent(type, name, width, alignment, id);
     
-    // After adding the component, remove it from the menu
+    
     this.removeItemFromMenu(id);
   }
   removeItemFromMenu(id: string | undefined) {
@@ -154,4 +159,6 @@ export class LeftSideComponent implements OnInit {
       }));
     }
   }
+
+
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Injectable({
@@ -6,6 +6,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 export class DragDropService {
   formComponents: any[] = [];
+  
   drop(event: CdkDragDrop<any[]>, targetArray: any[] = this.formComponents) {
     if (event.previousContainer === event.container) {
       moveItemInArray(targetArray, event.previousIndex, event.currentIndex);

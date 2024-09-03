@@ -7,17 +7,42 @@
     gap: 50px;
   }
   
-  .left-side {
+  .left-side , .right-side{
     flex: 1; 
     padding: 20px;
-    border: 1px solid #ccc; /* Kenarlık */
+    border: 1px solid #ccc;
   }
   
   .main-side {
-    flex: 2; /* Ana taraf iki kat geniş */
+    flex: 2; 
     padding: 20px;
     border: 1px solid #ccc;
     min-height: 500px;
     overflow: hidden; 
     position: relative;
   }
+
+  
+.button-eye {
+  display: flex;
+  justify-content: flex-end; 
+  padding: 10px;
+}
+
+.preview-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 1.5rem; 
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%; 
+}
+
+.preview-button:hover {
+  background-color: #0056b3; 
+}
+
+.pi-eye {
+  margin: 0;
+}

@@ -1,0 +1,14 @@
+<div class="saved-forms">
+    <h3>Kaydedilen Formlar</h3>
+    <ul>
+      <li *ngFor="let form of savedForms">
+        <a href="#" (click)="openFormDialog(form)">{{ form.name }}</a>
+      </li>
+    </ul>
+</div>
+  
+  <p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="true" [style]="{width: '600px',height:'600px'}" header="Form Önizleme">
+    <app-form-builder [formComponents]="selectedFormData" [previewMode]="true"></app-form-builder>
+  </p-dialog>
+
+  

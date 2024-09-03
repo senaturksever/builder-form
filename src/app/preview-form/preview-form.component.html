@@ -1,0 +1,18 @@
+<div class="button-eye">
+    <button class="btn btn-primary preview-button" (click)="openPreview()">
+      <i class="pi pi-search"></i>
+    </button>
+  </div>
+
+  <p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="true" [style]="{width: '600px',height: '600px'}" header="Form Önizleme">
+    <ng-template pTemplate="header">
+        <input type="text" [(ngModel)]="formName" placeholder="Form ismi" class="form-label" />
+      </ng-template>
+
+    <app-form-builder [previewComponents]="previewData" [previewMode]="true"></app-form-builder>
+    <ng-template pTemplate="footer">
+    
+        <button class="save-button" type="button" pButton label="Kaydet" (click)="saveForm()">Kaydet</button>
+        <button class="close-button" type="button" pButton label="Kapat" (click)="closePreview()">Kapat</button>
+      </ng-template>
+  </p-dialog>
