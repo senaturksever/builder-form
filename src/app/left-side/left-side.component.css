@@ -22,3 +22,62 @@
     flex-direction: row-reverse;
     margin-top: 50px;
   }
+  .panel-menu {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    max-width: 300px;
+  }
+  
+  .panel-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .panel-menu .menu-group {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px; /* To create a grouped container look */
+  }
+  
+  
+  .panel-menu .menu-item {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .panel-menu .sub-items {
+    margin-top: 5px;
+    padding-left: 15px;
+  }
+  
+  .panel-menu .sub-items li {
+    padding: 5px 0;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+  }
+  
+  .panel-menu .sub-items li:hover {
+    background-color: #f0f0f0;
+  }
+  
+
+  .cdk-drag-preview {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    z-index: 1000;
+  }
+  
+  .cdk-drop-list-dragging .cdk-drag {
+    opacity: 0.8;
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  

@@ -8,15 +8,20 @@ export class DragDropService {
   formComponents: any[] = [];
   
   drop(event: CdkDragDrop<any[]>, targetArray: any[] = this.formComponents) {
+    
     if (event.previousContainer === event.container) {
       moveItemInArray(targetArray, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        targetArray,
-        event.previousIndex,
-        event.currentIndex
-      );
+      // transferArrayItem(
+      //   event.previousContainer.data,
+      //   targetArray,
+      //   event.previousIndex,
+      //   event.currentIndex
+      // );
+      const clonedItem = { ...event.item.data };
+    
+      console.log(clonedItem);
+      targetArray.push(clonedItem);
     }
   }
   removeComponentFromList(id: string | undefined) {
@@ -29,6 +34,7 @@ export class DragDropService {
   }
 
   addComponent(type: string, name: string, width: string, alignment?: string, id?: string) {
+    console.log(width,type,alignment)
     const newComponent = {
         type,
         name,
@@ -37,8 +43,6 @@ export class DragDropService {
         id: id || ''
     };
     this.formComponents.push(newComponent);
-
-    
   }
 }
 

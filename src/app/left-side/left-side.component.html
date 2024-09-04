@@ -1,7 +1,40 @@
-<div class="panel-menu" cdkDropList [cdkDropListData]="items" (cdkDropListDropped)="drop($event)">
-    <p-panelMenu [model]="items">
-      <div *ngFor="let item of items" cdkDrag [cdkDragData]="item">
-   
+<!-- <div class="panel-menu" cdkDropList [cdkDropListData]="items" (cdkDropListDropped)="drop($event)">
+  <p-panelMenu [model]="items">
+    <div *ngFor="let item of items" cdkDrag [cdkDragData]="item">
+ 
+      <span>{{ item.label }}</span>
+    </div>
+  </p-panelMenu>
+</div>
+ -->
+
+<!-- <div class="panel-menu" cdkDropList #panelMenuDropList="cdkDropList"
+     [cdkDropListData]="items" 
+     [cdkDropListConnectedTo]="['formBuilderDropList']"
+     (cdkDropListDropped)="drop($event)">
+     <p-panelMenu [model]="items">
+    <div *ngFor="let item of items" cdkDrag [cdkDragData]="item">
+      <span cdkDragHandle>{{ item.label }}</span>
+    </div>
+     </p-panelMenu>
+</div> -->
+<div class="panel-menu" cdkDropList #panelMenuDropList="cdkDropList"
+     [cdkDropListData]="items" 
+     [cdkDropListConnectedTo]="['formBuilderDropList']"
+     (cdkDropListDropped)="drop($event)">
+  <ul>
+    <li *ngFor="let item of items" class="menu-group"> 
+      <div class="menu-item">
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
       </div>
-    </p-panelMenu>
-  </div>
+      <ul class="sub-items">
+        <li *ngFor="let subItem of item.items" cdkDrag [cdkDragData]="subItem" >
+
+          <i [class]="subItem.icon"></i>
+          <span>{{ subItem.label }}</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

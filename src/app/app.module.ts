@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RightSideComponent } from './right-side/right-side.component';
 import { PreviewFormComponent } from './preview-form/preview-form.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { PreviewFormComponent } from './preview-form/preview-form.component';
     HttpClientModule,
     MatDialogModule,
     RightSideComponent,
-    PreviewFormComponent
+    PreviewFormComponent,
+    DragDropModule
 ],
 exports: [
   FormBuilderComponent,  // Export if used in other modules

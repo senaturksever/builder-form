@@ -5,13 +5,16 @@
 </div> -->
 
 
-<div class="form-builder" >
-  <div class="row" cdkDropList (cdkDropListDropped)="drop($event)" >
+<div class="form-builder" cdkDropList 
+     id="formBuilderDropList" 
+     [cdkDropListData]="formComponents"
+     (cdkDropListDropped)="drop($event)">
+  <div class="row"  >
     <ng-container *ngIf="!previewMode; else staticMode">
     <div *ngFor="let component of formComponents; let i = index" 
          [ngClass]="getClassForComponent(component)" 
          cdkDrag cdkDragBoundary=".main-side" cdkDragPreview>
-      <div class="form-group" style="position: relative;">
+      <div class="form-group" style="position: relative;" [ngStyle]="{'width': component.width}">
         
         <!-- X icon for removing the component, hidden by default -->
           

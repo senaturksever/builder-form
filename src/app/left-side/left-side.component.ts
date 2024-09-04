@@ -34,123 +34,165 @@ export class LeftSideComponent implements OnInit {
   
 
   items: (MenuItem & { type?: string, name?: string })[] = []; 
-  formComponents: any[] = []; 
+
 
   constructor(private dragDropService: DragDropService) {}
 
-
+  logCommand(subItem: any) {
+    console.log(subItem);
+    subItem.command();
+  }
+  
   ngOnInit() {
       this.items = [
           {
               label: 'Text',
-              type: "input",
-              name: "Text Input",
               icon: 'pi pi-fw pi-pencil',
               items: [
                   {
+                    type: "input",
+                    name: "Text Input",
                       label: 'Tam Ekran',
                       icon: 'pi pi-fw pi-align-left',
-                      command: () => this.handleComponentAdd('input', 'Text Input', '100%')
+                      width: '100%'
                   },
                   {
+                    type: "input",
+                    name: "Text Input",
                       label: 'Yarım Ekran',
                       icon: 'pi pi-fw pi-align-right',
-                      command: () => this.handleComponentAdd('input', 'Text Input', '50%')
+                      width: '50%'
                   }
               ]
           },
           {
               label: 'Dropdown',
-              type: 'dropdown',
-              name: 'Dropdown',
               icon: 'pi pi-fw pi-user',
+              
               items: [
                   {   id: '1',
                       label: 'Ülke',
-                      icon: 'pi pi-fw pi-user-plus',
-                      command: () => this.handleComponentAdd('dropdown', 'Dropdown', '50%', '', '1')
+                      type: 'dropdown',
+                      name: 'Dropdown',
+                      width: '50%',
+                      icon: 'pi pi-fw pi-user-plus'
                   },
                   {
                     id:'2',
                     label: 'Şehir',
+                    type: 'dropdown',
+                    name: 'Dropdown',
                     icon: 'pi pi-fw pi-user-plus',
-                    command: () => this.handleComponentAdd('dropdown', 'Dropdown', '50%', '','2')
+                    width: '50%'
                   },
                   {
                     id:'3',
                     label: 'Yaş',
+                    type: 'dropdown',
+                    name: 'Dropdown',
                     icon: 'pi pi-fw pi-user-plus',
-                    command: () => this.handleComponentAdd('dropdown', 'Dropdown', '50%', '', '3')
+                    width: '50%'
                   },
                   {
                     id:'4',
                     label: 'Meslek',
+                    type: 'dropdown',
+                    name: 'Dropdown',
                     icon: 'pi pi-fw pi-user-plus',
-                    command: () => this.handleComponentAdd('dropdown', 'Dropdown', '50%', '', '4')
+                    width: '50%'
                   },
               ]
           },
           {
             label: 'TextArea',
-            type: 'inputTextarea',
-            name: 'Textarea',
             icon: 'pi pi-fw pi-pencil',
             items: [
                 {
                     label: 'Tam ekran',
+                    type: 'inputTextarea',
+                    name: 'Textarea',
                     icon: 'pi pi-fw pi-user-plus',
-                    command: () => this.handleComponentAdd('inputTextarea', 'Textarea', '100%')
+                    width: '100%'
                 },
                 {
                   label: 'Yarım ekran',
+                  type: 'inputTextarea',
                   icon: 'pi pi-fw pi-user-plus',
-                  command: () => this.handleComponentAdd('inputTextarea', 'Textarea', '50%')
+                  width: '50%'
                 },
             ]
         },
         {
           label: 'Button',
-          type: 'button',
-          name: 'Button',
           icon: 'pi pi-fw pi-user',
           items: [
               {
                   label: 'Sol',
+                  type: 'button',
+                  name: 'Button',
                   icon: 'pi pi-fw pi-user-plus',
-                  command: () => this.handleComponentAdd('button', 'Button', '100%', 'left')
+                  width: '100%',
+                  alignment: 'left'
               },
               {
                   label: 'Orta',
+                  type: 'button',
+                  name: 'Button',
                   icon: 'pi pi-fw pi-user-plus',
-                  command: () => this.handleComponentAdd('button', 'Button', '100%', 'center')
+                  width: '100%',
+                  alignment: 'center'
               },
               {
                   label: 'Sağ',
-                  icon: 'pi pi-fw pi-user-plus',
-                  command: () => this.handleComponentAdd('button', 'Button', '100%', 'right')
+                  type: 'button',
+                   name: 'Button',
+                   icon: 'pi pi-fw pi-user-plus',
+                   width: '100%',
+                   alignment: 'right',
               },
           ]
       },
         {
             label: 'Tarih',
-            type: 'date',
-            name: 'Date',
             icon: 'pi pi-fw pi-date',
-            command: () => this.handleComponentAdd('date', 'Date', '50%', 'left')
+            items:[
+              {
+                label: 'Tam ekran',
+                type: 'date',
+                name: 'Date',
+                icon: 'pi pi-fw pi-user-plus',
+                width: '100%'
+            },
+            {
+              label: 'Yarım ekran',
+              type: 'date',
+              name: 'Date',
+              icon: 'pi pi-fw pi-user-plus',
+              width: '50%'
+            },
+            ]
+            
            
         },
       ];
   }
   drop(event: any) {
-    this.dragDropService.drop(event);
+    const dropItem = event.item.data;
+    console.log(dropItem)
+    if(dropItem.command){
+      dropItem.command();
+    }
+    this.dragDropService.drop(event.item.data);
   }
 
   handleComponentAdd(type: string, name: string, width: string, alignment?: string, id?: string) {
+   console.log('handleComponentAdd triggered:', { type, name, width });
     this.dragDropService.addComponent(type, name, width, alignment, id);
     
     
     this.removeItemFromMenu(id);
   }
+
   removeItemFromMenu(id: string | undefined) {
     if (id) {
       this.items = this.items.map(group => ({
@@ -159,6 +201,6 @@ export class LeftSideComponent implements OnInit {
       }));
     }
   }
-
+  
 
 }
